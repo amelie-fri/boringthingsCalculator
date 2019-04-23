@@ -8,13 +8,15 @@ class display {
         this.g = random(255);
         this.b = random(255);
     }
-    show(x,y) {
+    show(x,y,t) {
         this.x = x;
         this.y = y;
         rectMode(CENTER);
         noStroke();
         fill(this.r, this.g, this.b);
-	    rect(this.x, this.y, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h);
+        
+        this.text(t,this.x-7,this.y+3);
     }
 
     color(r, g, b) {
