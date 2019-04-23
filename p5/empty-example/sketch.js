@@ -22,7 +22,7 @@ function preload () {
 	buttonPic = loadImage('data/Knopf2.gif');
 	machinePic= loadImage('data/Rema5.gif');
 	soundFormats('mp3');
-	buttonSound = loadSound('data/sound.mp3');
+	buttonSound = loadSound('data/sound.mp3'); // sound by Mike Koenig 
 
 }
 
