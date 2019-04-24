@@ -87,7 +87,6 @@ function mouseClicked() {
 		//buttonSound.play();
 		LoadRanCol();
 		button1.color(ranColor.r, ranColor.g, ranColor.b);	
-		button1.rotate(true);
 		display1.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	else if (button2.isPressed()) {
@@ -117,7 +116,9 @@ function mouseClicked() {
 	else if (button6.isPressed()) {
 		LoadRanCol();
 		button6.color(ranColor.r, ranColor.g, ranColor.b);
-		button6.rotate(true)
+		if (button6.rotate(true)){
+			button5.rotate(true);
+		}
 		display6.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	
