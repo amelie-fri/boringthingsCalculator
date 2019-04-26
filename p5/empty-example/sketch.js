@@ -19,10 +19,10 @@ function LoadRanCol()  {
 }
 
 function preload () {
-	buttonPic = loadImage('data/Knopf2.gif');
-	machinePic= loadImage('data/Rema5.gif');
+	buttonPic = loadImage('data/Knopf3.gif');
+	machinePic= loadImage('data/Rechenmaschine_neu6.gif');
 	soundFormats('mp3');
-	buttonSound = loadSound('data/sound.mp3'); // sound by Mike Koenig 
+	buttonSound = loadSound('data/sound.mp3');
 
 }
 
@@ -42,12 +42,12 @@ function setup() {;
   button5 = new button(57, buttonPic);
   button6 = new button(57, buttonPic);
 
-  display1 = new display(50, 20, 20); // round edge does not work
-  display2 = new display(50, 20, 20);
-  display3 = new display(50, 20, 20);
-  display4 = new display(50, 20, 20);
-  display5 = new display(50, 20, 20);
-  display6 = new display(50, 20, 20);  
+  display1 = new display(50, 25, 20); // round edge does not work
+  display2 = new display(50, 25, 20);
+  display3 = new display(50, 25, 20);
+  display4 = new display(50, 25, 20);
+  display5 = new display(50, 25, 20);
+  display6 = new display(50, 25, 20);  
 
 }
 
@@ -86,38 +86,48 @@ function mouseClicked() {
 	if (button1.isPressed()) {
 		//buttonSound.play();
 		LoadRanCol();
-		button1.color(ranColor.r, ranColor.g, ranColor.b);	
+		button1.color(ranColor.r, ranColor.g, ranColor.b);
+		button1.rotate(true);
 		display1.color(ranColor.r, ranColor.g, ranColor.b);
+		
 	}
 	else if (button2.isPressed()) {
 		LoadRanCol();
 		button2.color(ranColor.r, ranColor.g, ranColor.b);
-		button2.rotate(true)
+		if (button2.rotate(true)) {
+				button1.rotate(true);
+		}
 		display2.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	else if (button3.isPressed()) {
 		LoadRanCol();
 		button3.color(ranColor.r, ranColor.g, ranColor.b);
-		button3.rotate(true)
+		if (button3.rotate(true)) {
+				button2.rotate(true);
+	}
 		display3.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	else if (button4.isPressed()) {
 		LoadRanCol();
 		button4.color(ranColor.r, ranColor.g, ranColor.b);
-		button4.rotate(true)
+		if (button4.rotate(true)) {
+				button3.rotate(true);
+	}
 		display4.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	else if (button5.isPressed()) {
 		LoadRanCol();
 		button5.color(ranColor.r, ranColor.g, ranColor.b);
-		button5.rotate(true)
+		if (button5.rotate(true)) {
+				button4.rotate(true);
+	}
 		display5.color(ranColor.r, ranColor.g, ranColor.b);
 	}
 	else if (button6.isPressed()) {
 		LoadRanCol();
 		button6.color(ranColor.r, ranColor.g, ranColor.b);
 		if (button6.rotate(true)){
-			button5.rotate(true);
+				button5.rotate(true);
 		}
 		display6.color(ranColor.r, ranColor.g, ranColor.b);
 	}

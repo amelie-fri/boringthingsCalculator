@@ -15,8 +15,7 @@ class display {
         noStroke();
         fill(this.r, this.g, this.b);
         rect(this.x, this.y, this.w, this.h);
-        
-        this.text(t,this.x-7,this.y+3);
+        this.text(t,this.x-7,this.y+7);
     }
 
     color(r, g, b) {
@@ -25,12 +24,12 @@ class display {
         this.b = b;
     }
 
-    text (t, xt, yt) {
+    text(t, xt, yt) {
         this.t = t;
         this.xt = xt;
         this.yt = yt;
         fill('black');
-        textFont('Georgia');
+        textFont('Verdana');
         textSize(25);
         text(str(this.t), xt, yt);
         //text(str(this.t), 515, 427);

@@ -29,11 +29,11 @@ class button {
             this.angle = this.angle - 36;
         }
         
-        if (this.angle >=360){
+        if (this.angle >=360) {
             this.angle=0;
             return true;
         }
-        else if (this.angle<-360){
+        else if (this.angle<-360) {
             this.angle=0;
         }
         return false;
