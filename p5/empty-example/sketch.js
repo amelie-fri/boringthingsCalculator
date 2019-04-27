@@ -11,6 +11,9 @@ var ranColor = {
 	b: 0
 };
 
+var buttonArray = [];
+var displayArray = [];
+
 
 function LoadRanCol()  {
 	ranColor.r = random(255);
@@ -35,46 +38,46 @@ function setup() {;
 
   calculator = new picture(imgPosX,imgPosY, machinePic);
 
-  button1 = new button(57, buttonPic);
-  button2 = new button(57, buttonPic);
-  button3 = new button(57, buttonPic);
-  button4 = new button(57, buttonPic);
-  button5 = new button(57, buttonPic);
-  button6 = new button(57, buttonPic);
+  button1 = new button(57, buttonPic,buttonSound,null);
+  button2 = new button(57, buttonPic,buttonSound,1);
+  button3 = new button(57, buttonPic,buttonSound,2);
+  button4 = new button(57, buttonPic,buttonSound,3);
+  button5 = new button(57, buttonPic,buttonSound,4);
+  button6 = new button(57, buttonPic,buttonSound,5);
+
+  buttonArray.push(button1,button2,button3,button4,button5,button6)
 
   display1 = new display(50, 25, 20); // round edge does not work
   display2 = new display(50, 25, 20);
   display3 = new display(50, 25, 20);
   display4 = new display(50, 25, 20);
   display5 = new display(50, 25, 20);
-  display6 = new display(50, 25, 20);  
+  display6 = new display(50, 25, 20);
 
+  displayArray.push(display1,display2,display3,display4,display5,display6);
 }
 
 
 function draw() {
 	background(ranColor.r, ranColor.g, ranColor.b);
+	
+	/** Show the Machine */
 	calculator.show()
 	noStroke();
 	fill('#fae');
 	rect(0, 0, 150, 150);
 
-	button1.show(calculator.getButtonX(0)-2, calculator.getButtonY());
-	button2.show(calculator.getButtonX(1), calculator.getButtonY());
-	button3.show(calculator.getButtonX(2), calculator.getButtonY());
-	button4.show(calculator.getButtonX(3), calculator.getButtonY());
-	button5.show(calculator.getButtonX(4), calculator.getButtonY());
-	button6.show(calculator.getButtonX(5), calculator.getButtonY());
+	/* Show all the buttons */
+	buttonArray.forEach(function (buttonElement, i) {
+		buttonElement.show(calculator.getButtonX(i), calculator.getButtonY());
+	});
 
-	display1.show(calculator.getButtonX(0)-2, calculator.getButtonY()-55,str(button1.getPosition()));
-	display2.show(calculator.getButtonX(1), calculator.getButtonY()-55,str(button2.getPosition()));
-	display3.show(calculator.getButtonX(2), calculator.getButtonY()-55,str(button3.getPosition()));
-	display4.show(calculator.getButtonX(3), calculator.getButtonY()-55,str(button4.getPosition()));
-	display5.show(calculator.getButtonX(4), calculator.getButtonY()-55,str(button5.getPosition()));
-	display6.show(calculator.getButtonX(5), calculator.getButtonY()-55,str(button6.getPosition()));
+	/** Goes through all the display objects */
+	displayArray.forEach(function (displayElement, i) {
+		displayElement.show(calculator.getButtonX(i), calculator.getButtonY()-55,str(buttonArray[i].getPosition()));
+	});
 
 }
-
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -82,54 +85,43 @@ function windowResized() {
 
 // when user clicks mouse
 function mouseClicked() {
-	// Check if mouse is inside the circle
-	if (button1.isPressed()) {
-		//buttonSound.play();
-		LoadRanCol();
-		button1.color(ranColor.r, ranColor.g, ranColor.b);
-		button1.rotate(true);
-		display1.color(ranColor.r, ranColor.g, ranColor.b);
-		
-	}
-	else if (button2.isPressed()) {
-		LoadRanCol();
-		button2.color(ranColor.r, ranColor.g, ranColor.b);
-		if (button2.rotate(true)) {
-				button1.rotate(true);
+	/** Goes through all the button objects */
+	buttonArray.forEach(function (buttonElement, i) {
+		/** Calls the Button pressed function for each object with the connected display */
+		ButtonPressed(buttonElement,displayArray[i]);
+	});
+}
+
+function ButtonPressed(PressedButton,ConnectedDisplay){
+	/** If the button is pressed */
+	if (PressedButton.isPressed()){
+		if (PressedButton.rotateRight()){
+			RotateConnectedButton(PressedButton);
 		}
-		display2.color(ranColor.r, ranColor.g, ranColor.b);
+		ConnectedDisplay.color(random(255),random(255),random(255))
 	}
-	else if (button3.isPressed()) {
-		LoadRanCol();
-		button3.color(ranColor.r, ranColor.g, ranColor.b);
-		if (button3.rotate(true)) {
-				button2.rotate(true);
-	}
-		display3.color(ranColor.r, ranColor.g, ranColor.b);
-	}
-	else if (button4.isPressed()) {
-		LoadRanCol();
-		button4.color(ranColor.r, ranColor.g, ranColor.b);
-		if (button4.rotate(true)) {
-				button3.rotate(true);
-	}
-		display4.color(ranColor.r, ranColor.g, ranColor.b);
-	}
-	else if (button5.isPressed()) {
-		LoadRanCol();
-		button5.color(ranColor.r, ranColor.g, ranColor.b);
-		if (button5.rotate(true)) {
-				button4.rotate(true);
-	}
-		display5.color(ranColor.r, ranColor.g, ranColor.b);
-	}
-	else if (button6.isPressed()) {
-		LoadRanCol();
-		button6.color(ranColor.r, ranColor.g, ranColor.b);
-		if (button6.rotate(true)){
-				button5.rotate(true);
+}
+function RotateConnectedButton(PressedButton){
+	/** Checks if we have connected an overflow button */
+	if (PressedButton.getConnectedIndex() != null){
+		/** Gets the connected button */
+		var ConnectedButton = buttonArray[PressedButton.getConnectedIndex()-1];
+		/** Rotate the connected button and check for overflow. Reenters the function again if the connected button overflows */
+		if (ConnectedButton.rotateRight()){
+			RotateConnectedButton(ConnectedButton);
 		}
-		display6.color(ranColor.r, ranColor.g, ranColor.b);
 	}
-	
+}
+
+function keyPressed() {
+	/** If Enter is pressed */
+	if (keyCode == ENTER) {
+		/** Reset all buttons */
+		buttonArray.forEach(function (buttonElement, i) {
+			buttonElement.reset();
+		});
+		/** Play sound after reset */
+		buttonSound.setVolume(0.4);
+		buttonSound.play();
+	}
 }

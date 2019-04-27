@@ -22,7 +22,7 @@ class picture {
     }
     getButtonY(){
         //return parseInt(this.getHeight()*0.685) + this.getY()
-        return parseInt(this.getHeight()*0.65) + this.getY()
+        return parseInt(this.getHeight()*0.65)+2 + this.getY()
     }
     getButtonX(n){
         return parseInt(this.getWidth()*0.29) + this.getX() + 68*n

@@ -1,12 +1,14 @@
 class button {
-    constructor (d,img){
+    constructor (d,img,sound,cIndex){
         
         this.d = d;
         this.r = random(255);
         this.g = random(255);
         this.b = random(255);
         this.angle =0;
-        this.img = img
+        this.img = img;
+        this.sound = sound;
+        this.ConnectedIndex = cIndex;
     }
     show(x,y) {
         this.x = x;
@@ -21,22 +23,15 @@ class button {
         pop();
 
     }
-    rotate(direction){
-        if (direction){
-            this.angle = this.angle + 36;
-        }
-        else {
-            this.angle = this.angle - 36;
-        }
-        
+    rotateRight(){
+        this.angle = this.angle + 36;
         if (this.angle >=360) {
             this.angle=0;
             return true;
         }
-        else if (this.angle<-360) {
-            this.angle=0;
+        else{
+            return false;
         }
-        return false;
     }
     getPosition(){
         return this.angle/36
@@ -48,15 +43,30 @@ class button {
         this.b = b;
     }
 
+    randColor(){
+        this.color(random(255),random(255),random(255));
+    }
+
     isPressed() {
 	    if (dist(mouseX, mouseY, this.x, this.y) < (this.d/2)) {
-            buttonSound.setVolume(0.4);
-            buttonSound.play();
+            this.playSound()
             return true;
         }
         else {
             return false;
         }
+    }
+
+    playSound(){
+        this.sound.setVolume(0.4);
+        this.sound.play();
+    }
+    
+    reset(){
+        this.angle=0;
+    }
+    getConnectedIndex(){
+        return this.ConnectedIndex;
     }
 
 }
