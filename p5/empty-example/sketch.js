@@ -29,14 +29,19 @@ function setup() {;
   LoadRanCol();
 
   calculator = new picture(imgPosX,imgPosY, machinePic);
+  infoBox = new infoBoxObj();
+
+  /** Create number Generator */
+  number = new numberObj(2);
+  number.generateRandomNumbers();
 
   /** Construct button classes. Last variable refers to the index of the connected button (to the left) button 1 is all the way to the left */
-  button1 = new button(57, buttonPic,buttonSound,null);
-  button2 = new button(57, buttonPic,buttonSound,0);
-  button3 = new button(57, buttonPic,buttonSound,1);
-  button4 = new button(57, buttonPic,buttonSound,2);
-  button5 = new button(57, buttonPic,buttonSound,3);
-  button6 = new button(57, buttonPic,buttonSound,4);
+  button1 = new button(57, buttonPic,buttonSound,null,100000);
+  button2 = new button(57, buttonPic,buttonSound,0,10000);
+  button3 = new button(57, buttonPic,buttonSound,1,1000);
+  button4 = new button(57, buttonPic,buttonSound,2,100);
+  button5 = new button(57, buttonPic,buttonSound,3,10);
+  button6 = new button(57, buttonPic,buttonSound,4,1);
 
   /** Create button array */
   buttonArray.push(button1,button2,button3,button4,button5,button6)
@@ -60,9 +65,15 @@ function draw() {
 	
 	/** Show the Machine */
 	calculator.show()
-	noStroke();
-	fill('#fae');
-	rect(0, 0, 150, 150);
+
+	/** */
+	infoBox.number1.setText(number.getNumber(0));
+	infoBox.number2.setText(number.getNumber(1));
+	infoBox.mainNumber.setText(CalculateMainNumber());
+
+	/** Update infobox based on calculator  */
+	infoBox.update(calculator.getX(),calculator.getCenterY(),calculator.getWidth(),calculator.getHeight());
+	infoBox.show()
 
 	/* Show all the buttons */
 	buttonArray.forEach(function (buttonElement, i) {
@@ -89,6 +100,16 @@ function mouseClicked() {
 	});
 	/** Loads new random colors */
 	LoadRanCol();
+
+	if (infoBox.getResetButton().isPressed()){
+		/** Reset all buttons */
+		buttonArray.forEach(function (buttonElement, i) {
+			buttonElement.reset();
+		});
+		/** Play sound after reset */
+		buttonSound.setVolume(0.4);
+		buttonSound.play();
+	}
 }
 
 function ButtonPressed(PressedButton,ConnectedDisplay){
@@ -115,13 +136,8 @@ function RotateConnectedButton(PressedButton){
 function keyPressed() {
 	/** If Enter is pressed */
 	if (keyCode == ENTER) {
-		/** Reset all buttons */
-		buttonArray.forEach(function (buttonElement, i) {
-			buttonElement.reset();
-		});
-		/** Play sound after reset */
-		buttonSound.setVolume(0.4);
-		buttonSound.play();
+		/** Generate new numbers */
+		number.generateRandomNumbers();
 	}
 }
 
@@ -129,4 +145,12 @@ function LoadRanCol()  {
 	ranColor.r = random(255);
 	ranColor.g = random(255);
 	ranColor.b = random(255);
+}
+
+function CalculateMainNumber(){
+	let value = 0;
+	buttonArray.forEach(function (buttonElement, i) {
+		value = value + buttonElement.getValue();
+	});
+	return value;
 }

@@ -20,6 +20,12 @@ class picture {
     getHeight(){
         return this.img.height
     }
+    getCenterX(){
+        return this.xc
+    }
+    getCenterY(){
+        return this.yc
+    }
     getButtonY(){
         //return parseInt(this.getHeight()*0.685) + this.getY()
         return parseInt(this.getHeight()*0.65)+2 + this.getY()
