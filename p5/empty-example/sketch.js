@@ -1,6 +1,7 @@
 var img;
 let imgPosX;
 let imgPosY;
+const numMax = 999999;
 
 //?? map function to map wheel and number together ? :)
 
@@ -33,7 +34,7 @@ function setup() {;
 
   /** Create number Generator */
   number = new numberObj(2);
-  number.generateRandomNumbers();
+  number.generateRandomNumbers(100,10);
 
   /** Construct button classes. Last variable refers to the index of the connected button (to the left) button 1 is all the way to the left */
   button1 = new button(57, buttonPic,buttonSound,null,100000);
@@ -137,7 +138,7 @@ function keyPressed() {
 	/** If Enter is pressed */
 	if (keyCode == ENTER) {
 		/** Generate new numbers */
-		number.generateRandomNumbers();
+		number.generateRandomNumbers(numMax,0);
 	}
 }
 

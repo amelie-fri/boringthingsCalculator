@@ -7,9 +7,9 @@ class numberObj{
         
         this.active = false;
     }
-    generateRandomNumbers(){
+    generateRandomNumbers(base,offset){
         for (let i = 0; i < this.n.length; i++) { 
-            this.n[i] = parseInt(random(999999));
+            this.n[i] = parseInt(random(base)+offset);
           }
     }
     setNumber(n,value){
@@ -20,6 +20,15 @@ class numberObj{
     getNumber(n){
         if(n < this.n.length){
             return this.n[n];
+        }
+    }
+    checkNumber(fvalue){
+        const arrSum = arr => arr.reduce((a,b) => a + b, 0);
+        if (fvalue==arrSum(this.n)){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
