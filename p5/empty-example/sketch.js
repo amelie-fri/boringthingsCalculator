@@ -84,7 +84,8 @@ function draw() {
 
 	//ibutton1.update(900, 60, 200, 50);
 	
-	ibutton1.update(windowWidth/2, 70, 300, 50);
+	// ibutton1.update(windowWidth/2, 70, 300, 50);
+	ibutton1.update(machinePic.width, 70, 300, 50);
 	
 	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
