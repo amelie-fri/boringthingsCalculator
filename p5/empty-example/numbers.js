@@ -12,6 +12,7 @@ class numberObj{
             this.n[i] = parseInt(random(base)+offset);
           }
     }
+    // not used
     setNumber(n,value){
         if(n < this.n.length){
             this.n[n] = parseInt(value);

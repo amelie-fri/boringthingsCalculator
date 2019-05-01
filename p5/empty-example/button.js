@@ -1,5 +1,5 @@
 class button {
-    constructor (d,img,sound,cIndex,base){
+    constructor (d,img,sound,connectedIndex,base){
         
         this.d = d;
         this.r = random(255);
@@ -8,7 +8,7 @@ class button {
         this.angle =0;
         this.img = img;
         this.sound = sound;
-        this.ConnectedIndex = cIndex;
+        this.connectedIndex = connectedIndex;
         this.base = base;
     }
     show(x,y) {
@@ -67,7 +67,7 @@ class button {
         this.angle=0;
     }
     getConnectedIndex(){
-        return this.ConnectedIndex;
+        return this.connectedIndex;
     }
     getValue(){
         return this.getPosition()*this.base;

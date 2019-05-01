@@ -14,7 +14,7 @@ class display {
         rectMode(CENTER);
         noStroke();
         fill(this.r, this.g, this.b);
-        rect(this.x, this.y, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h, this.e);
         this.text(t);
     }
 
