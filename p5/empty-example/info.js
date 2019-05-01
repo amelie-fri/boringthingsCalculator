@@ -76,7 +76,7 @@ class infoButton {
 
     showText() {
         fill('black');
-        textFont('Verdana');
+        textFont('Courier');
         textSize(25);
         textAlign(CENTER,CENTER)
         text(str(this.textString), this.xc, this.yc);

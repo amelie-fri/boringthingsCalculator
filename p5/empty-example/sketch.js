@@ -59,8 +59,10 @@ function setup() {;
 	// Create display array. The index refers to the button with the same index in buttonarray
 	displayArray.push(display1,display2,display3,display4,display5,display6);
 
-	ibutton1 = new infoButton(100);
-	ibutton2 = new infoButton(100);
+	ibutton1 = new infoButton(250);
+	ibutton2 = new infoButton(250);
+	ibutton3 = new infoButton(250);
+	ibutton4 = new infoButton(250);
 }
 
 
@@ -80,12 +82,14 @@ function draw() {
 	infoBox.update(calculator.getX(),calculator.getCenterY(),calculator.getWidth(),calculator.getHeight());
 	infoBox.show()
 
-	ibutton1.update(900, 60, 200, 50);
+	//ibutton1.update(900, 60, 200, 50);
 	
-	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) );
+	ibutton1.update(windowWidth/2, 70, 300, 50);
+	
+	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
 
-	ibutton2.update(1150, 60, 200, 50);
+	ibutton2.update(1300, 70, 200, 50);
 	if (number.checkNumber(CalculateMainNumber())){
 		
 	ibutton2.setText('Correct');
@@ -94,6 +98,14 @@ function draw() {
 		ibutton2.setText('False');
 	}
 	ibutton2.show();
+
+	ibutton3.update(windowWidth/2, windowHeight-80, 200, 50);
+	ibutton3.setText('Reset');
+	ibutton3.show();
+
+	ibutton4.update(windowWidth/2 + 250, windowHeight-80, 200, 50);
+	ibutton4.setText('Done!');
+	ibutton4.show();
 
 	// Show all the buttons 
 	buttonArray.forEach(function (buttonElement, i) {
