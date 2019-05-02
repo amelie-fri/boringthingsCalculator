@@ -4,6 +4,7 @@ let imgPosY;
 const numMax = 500000-1;
 const numLevelMax = 10000;
 var numLevel = 1;
+var points = 0;
 
 //?? map function to map wheel and number together ? :)
 
@@ -62,6 +63,8 @@ function setup() {;
 
 	// number pluss number
 	ibutton1 = new infoButton(250,20);
+	// points
+	ibutton2 = new infoButton(250,10);
 	// reset button
 	ibutton3 = new infoButton(250,20);
 	// done button
@@ -80,9 +83,12 @@ function draw() {
 	
 	// ibutton1.update(windowWidth/2, 70, 300, 50);
 	ibutton1.update(imgPosX, calculator.getY()+0.16*calculator.getHeight(), 300, 50);
-	
 	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
+
+	ibutton2.update(imgPosX - (0.25)*calculator.getWidth(), calculator.getY()+0.16*calculator.getHeight(), 50, 50);
+	ibutton2.setText(str(points));
+	ibutton2.show();
 
 	ibutton3.update(imgPosX - (1/5)*calculator.getWidth(),calculator.getY()+(0.83)*calculator.getHeight(), 200, 50);
 	ibutton3.setText('Reset');
@@ -95,10 +101,6 @@ function draw() {
 	else{
 		ibutton4.setText('...');
 	}
-	ibutton4.show();
-
-	
-	
 	ibutton4.show();
 
 	// Show all the buttons 
@@ -128,10 +130,22 @@ function mouseClicked() {
 	LoadRanCol();
 
 	// Amelie Reset button
-	if (ibutton3.isPressed()){
-		buttonArray.forEach(function (buttonElement, i) {
-			buttonElement.reset();
-		});
+	if ((ibutton3.isPressed())&&(CalculateMainNumber()!=0)){
+		resetButtons();
+	}
+	if (ibutton4.isPressed()){
+		if(number.checkNumber(CalculateMainNumber())){
+			interateNumbers();
+			resetButtons();
+			points = points +1;
+		}
+		else{
+			// Maybe play a "false" sound here?
+			buttonSound.setVolume(0.4);
+			buttonSound.play();
+			points=0;
+		}
+
 	}
 }
 
@@ -161,14 +175,14 @@ function keyPressed() {
 	// If Enter is pressed
 	if (keyCode == ENTER) {
 		// Generate new numbers
-		interateNumbers();
+		//interateNumbers();
 	}
 }
 
 function interateNumbers(){
 	number.generateRandomNumbers(numMax/(numLevelMax/numLevel),1);
 	numLevel = numLevel*10;
-	if (numLevel >= numLevelMax) numLevel=1;
+	if (numLevel >= numLevelMax) numLevel=numLevelMax;
 }
 
 function LoadRanCol()  {
@@ -183,4 +197,12 @@ function CalculateMainNumber(){
 		value = value + buttonElement.getValue();
 	});
 	return value;
+}
+
+function resetButtons(){
+	buttonArray.forEach(function (buttonElement, i) {
+		buttonElement.reset();
+	});
+	buttonSound.setVolume(0.4);
+	buttonSound.play();
 }
