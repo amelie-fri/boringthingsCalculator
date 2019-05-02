@@ -127,16 +127,6 @@ function mouseClicked() {
 	// Loads new random colors
 	LoadRanCol();
 
-	if (infoBox.getResetButton().isPressed()){
-		// Reset all buttons
-		buttonArray.forEach(function (buttonElement, i) {
-			buttonElement.reset();
-		});
-		// Play sound after reset
-		buttonSound.setVolume(0.4);
-		buttonSound.play();
-	}
-
 	// Amelie Reset button
 	if (ibutton3.isPressed()){
 		buttonArray.forEach(function (buttonElement, i) {
