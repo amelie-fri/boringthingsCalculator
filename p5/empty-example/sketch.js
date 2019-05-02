@@ -82,11 +82,11 @@ function draw() {
 	//ibutton1.update(900, 60, 200, 50);
 	
 	// ibutton1.update(windowWidth/2, 70, 300, 50);
-	ibutton1.update(imgPosX, calculator.getY()+0.16*calculator.getHeight(), 300, 50);
+	ibutton1.update(imgPosX, calculator.getY()+0.168*calculator.getHeight(), 300, 45);
 	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
 
-	ibutton2.update(imgPosX - (0.25)*calculator.getWidth(), calculator.getY()+0.16*calculator.getHeight(), 50, 50);
+	ibutton2.update(imgPosX - (0.25)*calculator.getWidth(), calculator.getY()+0.168*calculator.getHeight(), 45, 45);
 	ibutton2.setText(str(points));
 	ibutton2.show();
 
@@ -95,12 +95,7 @@ function draw() {
 	ibutton3.show();
 	
 	ibutton4.update(imgPosX + (1/5)*calculator.getWidth(),calculator.getY()+(0.83)*calculator.getHeight(), 200, 50);
-	if (number.checkNumber(CalculateMainNumber())){
-		ibutton4.setText('Done!');
-	}
-	else{
-		ibutton4.setText('...');
-	}
+	ibutton4.setText('Done?');
 	ibutton4.show();
 
 	// Show all the buttons 
