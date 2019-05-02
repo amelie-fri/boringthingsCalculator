@@ -2,7 +2,7 @@ var img;
 let imgPosX;
 let imgPosY;
 const numMax = 500000-1;
-const numLevelMax = 10000;
+const numLevelMax = 1000;
 var numLevel = 1;
 var points = 0;
 
