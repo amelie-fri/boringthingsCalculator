@@ -19,7 +19,7 @@ var buttonArray = [];
 var displayArray = [];
 
 function preload () {
-	buttonPic = loadImage('data/Knopf3.gif');
+	buttonPic = loadImage('data/knopf3.gif');
 	machinePic= loadImage('data/Rechenmaschine_neu6.gif');
 	soundFormats('mp3');
 	buttonSound = loadSound('data/sound.mp3');
@@ -95,7 +95,7 @@ function draw() {
 	ibutton3.show();
 	
 	ibutton4.update(imgPosX + (1/5)*calculator.getWidth(),calculator.getY()+(0.83)*calculator.getHeight(), 200, 50);
-	ibutton4.setText('Done?');
+	ibutton4.setText('Done!');
 	ibutton4.show();
 
 	// Show all the buttons 
