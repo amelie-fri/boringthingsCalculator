@@ -1,7 +1,7 @@
 var img;
 let imgPosX;
 let imgPosY;
-const numMax = 500000-1;
+const numMax = 50000-1;
 const numLevelMax = 1000;
 var numLevel = 1;
 var points = 0;
@@ -171,11 +171,12 @@ function keyPressed() {
 	if (keyCode == ENTER) {
 		// Generate new numbers
 		//interateNumbers();
+		interateNumbers();
 	}
 }
 
 function interateNumbers(){
-	number.generateRandomNumbers(numMax/(numLevelMax/numLevel),1);
+	number.generateRandomNumbers(numLevel*10,1);
 	numLevel = numLevel*10;
 	if (numLevel >= numLevelMax) numLevel=numLevelMax;
 }
