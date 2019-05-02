@@ -1,7 +1,9 @@
 var img;
 let imgPosX;
 let imgPosY;
-const numMax = 999999;
+const numMax = 500000-1;
+const numLevelMax = 10000;
+var numLevel = 1;
 
 //?? map function to map wheel and number together ? :)
 
@@ -30,11 +32,10 @@ function setup() {;
 	LoadRanCol();
 
 	calculator = new picture(imgPosX,imgPosY, machinePic);
-	infoBox = new infoBoxObj();
 
 	// Create number Generator
 	number = new numberObj(2);
-	number.generateRandomNumbers(100,10);
+	interateNumbers();
 
 	// Construct button classes. Last variable refers to the index
 	// of the connected button (to the left) button 1 is all the way to the left
@@ -59,10 +60,12 @@ function setup() {;
 	// Create display array. The index refers to the button with the same index in buttonarray
 	displayArray.push(display1,display2,display3,display4,display5,display6);
 
-	ibutton1 = new infoButton(250);
-	ibutton2 = new infoButton(250);
-	ibutton3 = new infoButton(250);
-	ibutton4 = new infoButton(250);
+	// number pluss number
+	ibutton1 = new infoButton(250,20);
+	// reset button
+	ibutton3 = new infoButton(250,20);
+	// done button
+	ibutton4 = new infoButton(250,20);
 }
 
 
@@ -73,39 +76,29 @@ function draw() {
 	// Show the Machine
 	calculator.show()
 
-	//
-	infoBox.number1.setText(number.getNumber(0));
-	infoBox.number2.setText(number.getNumber(1));
-	infoBox.mainNumber.setText(CalculateMainNumber());
-
-	// Update infobox based on calculator
-	infoBox.update(calculator.getX(),calculator.getCenterY(),calculator.getWidth(),calculator.getHeight());
-	infoBox.show()
-
 	//ibutton1.update(900, 60, 200, 50);
 	
 	// ibutton1.update(windowWidth/2, 70, 300, 50);
-	ibutton1.update(machinePic.width, 70, 300, 50);
+	ibutton1.update(imgPosX, calculator.getY()+0.16*calculator.getHeight(), 300, 50);
 	
 	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
 
-	ibutton2.update(1300, 70, 200, 50);
-	if (number.checkNumber(CalculateMainNumber())){
-		
-	ibutton2.setText('Correct');
-	}
-	else{
-		ibutton2.setText('False');
-	}
-	ibutton2.show();
-
-	ibutton3.update(windowWidth/2, windowHeight-80, 200, 50);
+	ibutton3.update(imgPosX - (1/5)*calculator.getWidth(),calculator.getY()+(0.83)*calculator.getHeight(), 200, 50);
 	ibutton3.setText('Reset');
 	ibutton3.show();
+	
+	ibutton4.update(imgPosX + (1/5)*calculator.getWidth(),calculator.getY()+(0.83)*calculator.getHeight(), 200, 50);
+	if (number.checkNumber(CalculateMainNumber())){
+		ibutton4.setText('Done!');
+	}
+	else{
+		ibutton4.setText('...');
+	}
+	ibutton4.show();
 
-	ibutton4.update(windowWidth/2 + 250, windowHeight-80, 200, 50);
-	ibutton4.setText('Done!');
+	
+	
 	ibutton4.show();
 
 	// Show all the buttons 
@@ -143,6 +136,13 @@ function mouseClicked() {
 		buttonSound.setVolume(0.4);
 		buttonSound.play();
 	}
+
+	// Amelie Reset button
+	if (ibutton3.isPressed()){
+		buttonArray.forEach(function (buttonElement, i) {
+			buttonElement.reset();
+		});
+	}
 }
 
 function ButtonPressed(PressedButton,ConnectedDisplay){
@@ -171,8 +171,14 @@ function keyPressed() {
 	// If Enter is pressed
 	if (keyCode == ENTER) {
 		// Generate new numbers
-		number.generateRandomNumbers(numMax,0);
+		interateNumbers();
 	}
+}
+
+function interateNumbers(){
+	number.generateRandomNumbers(numMax/(numLevelMax/numLevel),1);
+	numLevel = numLevel*10;
+	if (numLevel >= numLevelMax) numLevel=1;
 }
 
 function LoadRanCol()  {

@@ -1,10 +1,10 @@
 class infoButton {
-    constructor (c){
+    constructor (c,e){
         this.xc = 0;
         this.yc = 0;
         this.w = 0;
         this.h = 0;
-        this.e = 0;
+        this.e = e;
         this.color = c;
         this.textString = '';
     }
@@ -14,7 +14,6 @@ class infoButton {
         this.yc = y;
         this.w = w;
         this.h = h;
-        this.e = 10;
     }
 
     show(){
