@@ -121,8 +121,6 @@ function mouseClicked() {
 		// Calls the Button pressed function for each object with the connected display
 		ButtonPressed(buttonElement,displayArray[i]);
 	});
-	// Loads new random colors
-	LoadRanCol();
 
 	// Amelie Reset button
 	if ((ibutton3.isPressed())&&(CalculateMainNumber()!=0)){
@@ -140,13 +138,14 @@ function mouseClicked() {
 			buttonSound.play();
 			points=0;
 		}
-
 	}
 }
 
 function ButtonPressed(PressedButton,ConnectedDisplay){
 	// If the button is pressed
 	if (PressedButton.isPressed()){
+		// Loads new random colors
+		LoadRanCol();
 		if (PressedButton.rotateRight()){
 			RotateConnectedButton(PressedButton);
 		}
