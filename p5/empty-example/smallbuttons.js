@@ -1,5 +1,5 @@
 class infoButton {
-    constructor (c,e){
+    constructor (c,e,resizeFactor){
         this.xc = 0;
         this.yc = 0;
         this.w = 0;
@@ -7,13 +7,14 @@ class infoButton {
         this.e = e;
         this.color = c;
         this.textString = '';
+        this.resizeFactor = resizeFactor;
     }
 
     update(x,y,w,h,e){
         this.xc = x;
         this.yc = y;
-        this.w = w;
-        this.h = h;
+        this.w = w/this.resizeFactor;
+        this.h = h/this.resizeFactor;
     }
 
     show(){
@@ -26,7 +27,8 @@ class infoButton {
     showText() {
         fill('black');
         textFont('Courier');
-        textSize(28);
+        let tSize = parseInt(28/this.resizeFactor)
+        textSize(tSize);
         textAlign(CENTER,CENTER)
         text(str(this.textString), this.xc, this.yc);
         

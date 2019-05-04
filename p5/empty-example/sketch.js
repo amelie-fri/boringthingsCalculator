@@ -1,14 +1,12 @@
-var img;
 let imgPosX;
 let imgPosY;
-const numMax = 50000-1;
 const numLevelMax = 1000;
 var numLevel = 1;
 var points = 0;
 
-//?? map function to map wheel and number together ? :)
+var resizeFactor; 
+const originalPictureSize = 800;
 
-//object oriented programming, one for every circle :) 
 var ranColor = {
 	r: 0,
 	g: 0,
@@ -26,13 +24,18 @@ function preload () {
 }
 
 function setup() {;
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(window.innerWidth, window.innerHeight);
 	imgPosX = windowWidth/2;
 	imgPosY = windowHeight/2;
-	// pick colors randomly
-	LoadRanCol();
 
-	calculator = new picture(imgPosX,imgPosY, machinePic);
+	LoadRanCol();
+	
+	// Calculate the reset factor based on the original size of the calculator
+	resizeFactor = originalPictureSize/Math.min(window.innerWidth,window.innerHeight);
+	// Resize the pictures to fit to screen
+	buttonPic.resize(60/resizeFactor,60/resizeFactor);
+	machinePic.resize(originalPictureSize/resizeFactor,originalPictureSize/resizeFactor);
+	calculator = new picture(imgPosX,imgPosY, machinePic,resizeFactor);
 
 	// Create number Generator
 	number = new numberObj(2);
@@ -40,35 +43,35 @@ function setup() {;
 
 	// Construct button classes. Last variable refers to the index
 	// of the connected button (to the left) button 1 is all the way to the left
-	button1 = new button(57, buttonPic,buttonSound,null,100000);
-	button2 = new button(57, buttonPic,buttonSound,0,10000);
-	button3 = new button(57, buttonPic,buttonSound,1,1000);
-	button4 = new button(57, buttonPic,buttonSound,2,100);
-	button5 = new button(57, buttonPic,buttonSound,3,10);
-	button6 = new button(57, buttonPic,buttonSound,4,1);
+	button1 = new button(buttonPic,buttonSound,null,100000);
+	button2 = new button(buttonPic,buttonSound,0,10000);
+	button3 = new button(buttonPic,buttonSound,1,1000);
+	button4 = new button(buttonPic,buttonSound,2,100);
+	button5 = new button(buttonPic,buttonSound,3,10);
+	button6 = new button(buttonPic,buttonSound,4,1);
 
 	// Create button array 
 	buttonArray.push(button1,button2,button3,button4,button5,button6);
 
 	// Construct display classes 
-	display1 = new display(50, 28, 10); // round edge does not work
-	display2 = new display(50, 28, 10);
-	display3 = new display(50, 28, 10);
-	display4 = new display(50, 28, 10);
-	display5 = new display(50, 28, 10);
-	display6 = new display(50, 28, 10);
+	display1 = new display(50, 28, 10,resizeFactor); // round edge does not work
+	display2 = new display(50, 28, 10,resizeFactor);
+	display3 = new display(50, 28, 10,resizeFactor);
+	display4 = new display(50, 28, 10,resizeFactor);
+	display5 = new display(50, 28, 10,resizeFactor);
+	display6 = new display(50, 28, 10,resizeFactor);
 
 	// Create display array. The index refers to the button with the same index in buttonarray
 	displayArray.push(display1,display2,display3,display4,display5,display6);
 
 	// number pluss number
-	ibutton1 = new infoButton(250,20);
+	ibutton1 = new infoButton(250,20,resizeFactor);
 	// points
-	ibutton2 = new infoButton(250,10);
+	ibutton2 = new infoButton(250,10,resizeFactor);
 	// reset button
-	ibutton3 = new infoButton(250,20);
+	ibutton3 = new infoButton(250,20,resizeFactor);
 	// done button
-	ibutton4 = new infoButton(250,20);
+	ibutton4 = new infoButton(250,20,resizeFactor);
 }
 
 
@@ -79,9 +82,6 @@ function draw() {
 	// Show the Machine
 	calculator.show()
 
-	//ibutton1.update(900, 60, 200, 50);
-	
-	// ibutton1.update(windowWidth/2, 70, 300, 50);
 	ibutton1.update(imgPosX, calculator.getY()+0.168*calculator.getHeight(), 300, 45);
 	ibutton1.setText( str(number.getNumber(0))+ '+' + str(number.getNumber(1)) + ' = ' + ' ? ' );
 	ibutton1.show();
@@ -105,7 +105,7 @@ function draw() {
 
 	// Goes through all the display objects
 	displayArray.forEach(function (displayElement, i) {
-		displayElement.show(calculator.getButtonX(i), calculator.getButtonY()-58,str(buttonArray[i].getPosition()));
+		displayElement.show(calculator.getButtonX(i), calculator.getButtonY()-(58/resizeFactor),str(buttonArray[i].getPosition()));
 	});
 
 }
@@ -122,10 +122,11 @@ function mouseClicked() {
 		ButtonPressed(buttonElement,displayArray[i]);
 	});
 
-	// Amelie Reset button
+	// Check if reset button is pressed
 	if ((ibutton3.isPressed())&&(CalculateMainNumber()!=0)){
 		resetButtons();
 	}
+	// Check if "done" button is pressed
 	if (ibutton4.isPressed()){
 		if(number.checkNumber(CalculateMainNumber())){
 			interateNumbers();
@@ -133,7 +134,7 @@ function mouseClicked() {
 			points = points +1;
 		}
 		else{
-			// Maybe play a "false" sound here?
+			// False answer
 			buttonSound.setVolume(0.4);
 			buttonSound.play();
 			points=0;
